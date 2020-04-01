@@ -40,7 +40,7 @@ router.post('/', (req, res) => {
 
   router.put('/:id', (req, res) => {
     db.update(req.params.id, req.body)
-      .then(updatedFlashcard => res.json(updatedFlashcard[0]))
+      .then(updatedFlashcard => res.status(200).json(updatedFlashcard))
       .catch(err => res.status(500).json(err));
   })
 

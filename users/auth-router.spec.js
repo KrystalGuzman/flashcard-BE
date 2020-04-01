@@ -11,9 +11,8 @@ describe('Auth Router', () => {
       const response = await request(server)
         .post('/api/auth/register')
         .send({
-          username: 'something',
-          password: 'Test',
-          role: 'client'
+          username: 'blah',
+          password: 'Test'
         });
       expect(response.status).toBe(expectedStatus);
       expect(response.type).toBe('application/json');
@@ -52,17 +51,4 @@ describe('Auth Router', () => {
       expect(response.status).toBe(expectedStatus);
     });
   });
-//   describe('Auth Router Test CleanUp', () => {
-//     it('removes the User', async () => {
-//       const loginResponse = await request(server)
-//         .post('/api/auth/login')
-//         .send({ username: 'Krystal', password: 'password' });
-//       const { token } = loginResponse.body;
-//       const response = await request(server)
-//         .delete('/api/users')
-//         .set('Authorization', token);
-//       const expectedStatus = 200;
-//       expect(response.status).toBe(expectedStatus);
-//     });
-//   });
 });

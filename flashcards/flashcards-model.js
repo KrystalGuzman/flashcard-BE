@@ -3,7 +3,7 @@ const db = require('../data/dbConfig.js');
 module.exports = {
     find,
     findBy,
-    findById,
+    findByID,
     add,
     update,
 	remove
@@ -17,7 +17,7 @@ function findBy(filter) {
     return db("flashcards").where(filter);
   }
 
-function findById(id){
+function findByID(id){
     return db('flashcards')
     .where({ id })
     .first();
@@ -28,21 +28,24 @@ function add(flashcard){
     .insert(flashcard, "id")
     .then(ids => {
       const [id] = ids;
-      return findById(id);
+      return findByID(id);
     });
 }
 
-function update(changes, id){
+function update(id, changes){
     return db('flashcards')
     .where({ id })
     .update(changes)
     .then(() =>{
-        return findById(id)
+        return findByID(id)
     });
 }
 
 function remove(id){
     return db("flashcards")
     .where("id", id)
-    .del();
+    .del()
+    .then(() =>{
+        return id
+    });
 }

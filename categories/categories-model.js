@@ -3,7 +3,7 @@ const db = require('../data/dbConfig.js');
 module.exports = {
     find,
     findBy,
-    findById,
+    findByID,
     add,
     update,
     remove,
@@ -18,7 +18,7 @@ function findBy(filter) {
     return db("categories").where(filter);
   }
 
-function findById(id){
+function findByID(id){
     return db('categories')
     .where({ id })
     .first();
@@ -29,23 +29,26 @@ function add(category){
     .insert(category, "id")
     .then(ids => {
       const [id] = ids;
-      return findById(id);
+      return findByID(id);
     });
 }
 
-function update(changes, id){
+function update(id, changes){
     return db('categories')
     .where({ id })
     .update(changes)
     .then(() =>{
-        return findById(id)
+        return findByID(id)
     });
 }
 
 function remove(id){
     return db("categories")
     .where("id", id)
-    .del();
+    .del()
+    .then(() =>{
+        return id
+    });
 }
 
 // get all flashcards with the same category ID
