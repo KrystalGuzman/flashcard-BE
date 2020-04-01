@@ -2,29 +2,25 @@ const db = require('../data/dbConfig.js');
 
 module.exports = {
     find,
+    findBy,
     findById,
-    findSteps,
     add,
     update,
-    remove,
-    addStep
+	remove
 }
 
 function find(){
  return db('flashcards');
 }
 
+function findBy(filter) {
+    return db("flashcards").where(filter);
+  }
+
 function findById(id){
     return db('flashcards')
     .where({ id })
     .first();
-}
-
-function findSteps(id){
-    return db("steps")
-    .select("steps.id", "flashcards.flashcard_name", "steps.step_number", "steps.instructions")
-    .join("flashcards", "steps.flashcard_id", "flashcards.id")
-    .where("flashcard_id", id);
 }
 
 function add(flashcard){
@@ -50,8 +46,3 @@ function remove(id){
     .where("id", id)
     .del();
 }
-
-function addStep(step, id) {
-    return db('steps')
-      .insert({ ...step, flashcard_id: id });
-  };

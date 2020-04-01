@@ -6,7 +6,7 @@ const { jwtSecret } = require("../config/secrets.js");
 const Users = require("./users-model.js");
 
 // for endpoints beginning with /api/auth
-router.post("/register", validateUserContent, (req, res) => {
+router.post("/register", validateUserContent, checkUnique, (req, res) => {
   let user = req.body;
   const hash = bcrypt.hashSync(user.password, 10); // 2 ^ n
   user.password = hash;
@@ -45,6 +45,23 @@ router.post("/login", validateUserContent, (req, res) => {
     });
 });
 
+// GET: log out a user
+router.get("/logout", (req, res) => {
+
+  // user is not logged in; ignore
+  if (!req.session)
+      { res.status(200).json({message: "No need to log out if you are not logged in."}) }
+  else
+  {
+      req.session.destroy(error => {
+          if (error)
+              { res.status(500).json({message: "Could not log out."}) }
+          else
+              { res.status(200).json({message: "Successfully logged out."}) }
+      })
+  }
+})
+
 // ---------------------- Generate Token ---------------------- //
 
 function generateToken(user) {
@@ -69,6 +86,16 @@ function validateUserContent(req, res, next) {
   } else {
     next();
   }
+}
+
+function checkUnique(req, res, next) {
+  Users.findBy({ username: req.body.username })
+    .then(foundUser => {
+      if (foundUser.length === 0) {
+        next();
+  } else { res.status(400).json({ message: 'Username is already taken' });
+}
+})
 }
 
 module.exports = router;

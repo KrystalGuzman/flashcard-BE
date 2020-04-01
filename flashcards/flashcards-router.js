@@ -1,117 +1,54 @@
 const express = require('express');
-
-const Flashcards = require('./flashcards-model.js');
-
+const db = require('./flashcards-model');
 const router = express.Router();
 
+
+// GET a list of flashcards
 router.get('/', (req, res) => {
-  Flashcards.find()
-  .then(flashcards => {
-    res.json(flashcards);
-  })
-  .catch(err => {
-    res.status(500).json({ message: 'Failed to get flashcards' });
-  });
+	db
+		.find()
+		.then((flashcards) => res.status(200).json(flashcards))
+		.catch((error) => res.status(500).json({ message: 'Could not get flashcards from server.' }));
 });
 
+// GET a flashcard by ID
 router.get('/:id', (req, res) => {
-  const { id } = req.params;
-
-  Flashcards.findById(id)
-  .then(flashcard => {
-    if (flashcard) {
-      res.json(flashcard);
-    } else {
-      res.status(404).json({ message: 'Could not find flashcard with given id.' })
-    }
-  })
-  .catch(err => {
-    res.status(500).json({ message: 'Failed to get flashcards' });
-  });
+	db
+		.findByID(req.params.id)
+		.then((flashcard) => res.status(200).json(flashcard))
+		.catch((error) => res.status(500).json({ message: 'Could not get flashcard #' + req.params.id + ' from server.' }));
 });
 
-router.get('/:id/steps', (req, res) => {
-  const { id } = req.params;
-
-  Flashcards.findSteps(id)
-  .then(steps => {
-    if (steps.length) {
-      res.json(steps);
-    } else {
-      res.status(404).json({ message: 'Could not find steps for given flashcard' })
-    }
-  })
-  .catch(err => {
-    res.status(500).json({ message: 'Failed to get steps' });
-  });
-});
-
+// POST a flashcard to the database
 router.post('/', (req, res) => {
-  const flashcardData = req.body;
-
-  Flashcards.add(flashcardData)
-  .then(flashcard => {
-    res.status(201).json(flashcard);
-  })
-  .catch (err => {
-    res.status(500).json({ message: 'Failed to create new flashcard' });
-  });
-});
-
-router.post('/:id/steps', (req, res) => {
-  const stepData = req.body;
-  const { id } = req.params; 
-
-  Flashcards.findById(id)
-  .then(flashcard => {
-    if (flashcard) {
-      Flashcards.addStep(stepData, id)
-      .then(step => {
-        res.status(201).json(step);
+    db.findBy({ name: req.body.name })
+      .then(foundUser => {
+        if (foundUser.length === 0) {
+          db.add(req.body)
+            .then(newFlashcard => {
+              res.status(201).json(newFlashcard[0]);
+            })
+            .catch(err => res.status(500).json(err));
+        } else {
+          res.status(400).json({
+            message: `The Flashcard Name: ${req.body.name}, is already taken.`,
+          });
+        }
       })
-    } else {
-      res.status(404).json({ message: 'Could not find flashcard with given id.' })
-    }
+      .catch(err => res.status(500).json(err));
   })
-  .catch (err => {
-    res.status(500).json({ message: 'Failed to create new step' });
-  });
-});
 
-router.put('/:id', (req, res) => {
-  const { id } = req.params;
-  const changes = req.body;
-
-  Flashcards.findById(id)
-  .then(flashcard => {
-    if (flashcard) {
-      Flashcards.update(changes, id)
-      .then(updatedFlashcard => {
-        res.json(updatedFlashcard);
-      });
-    } else {
-      res.status(404).json({ message: 'Could not find flashcard with given id' });
-    }
+  router.put('/:id', (req, res) => {
+    db.update(req.params.id, req.body)
+      .then(updatedFlashcard => res.json(updatedFlashcard[0]))
+      .catch(err => res.status(500).json(err));
   })
-  .catch (err => {
-    res.status(500).json({ message: 'Failed to update flashcard' });
-  });
-});
 
-router.delete('/:id', (req, res) => {
-  const { id } = req.params;
-
-  Flashcards.remove(id)
-  .then(deleted => {
-    if (deleted) {
-      res.json({ removed: deleted });
-    } else {
-      res.status(404).json({ message: 'Could not find flashcard with given id' });
-    }
+  router.delete('/:id', (req, res) => {
+    db.remove(req.params.id)
+      .then(count => res.json(count))
+      .catch(err => res.status(500).json(err));
   })
-  .catch(err => {
-    res.status(500).json({ message: 'Failed to delete flashcard' });
-  });
-});
 
+  
 module.exports = router;
