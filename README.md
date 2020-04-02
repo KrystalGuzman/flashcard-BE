@@ -1,6 +1,6 @@
 # Flashcard App v1.0.0
 
-Deployed Link is ...
+Deployed Link is https://educationflashcards.herokuapp.com/
 
 - [Auth](#auth)
 	- [Logs an User In](#logs-an-user-in)
@@ -425,7 +425,7 @@ Unauthorized-Response:
 
 <p>Retrieves the Current Users Signed up Classes</p>
 
-	GET /api/user/flashcards
+	GET /api/users/categories
 
 
 ### Success Response
