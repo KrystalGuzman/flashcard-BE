@@ -15,7 +15,7 @@ server.use(express.json());
 server.use(cors());
 
 server.use("/api/auth", authRouter);
-server.use("/api/users", restricted, usersRouter);
+server.use("/api/users", restricted, checkRole, usersRouter);
 server.use("/api/categories", restricted, categoriesRouter);
 server.use("/api/flashcards", restricted, flashcardsRouter);
 
