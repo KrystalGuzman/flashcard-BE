@@ -1,6 +1,6 @@
 # Flashcard App v1.0.0
 
-Deployed Link is https://lambda-anywhere-fitness.herokuapp.com/
+Deployed Link is ...
 
 - [Auth](#auth)
 	- [Logs an User In](#logs-an-user-in)
@@ -233,22 +233,20 @@ Success-Response:
 
 ```
 {
-  "id": 7,
-  "name": "Test Category",
-  "description": "Testing Update Router",
-  "created_at": "2019-10-21T01:17:05.085Z",
-  "updated_at": "2019-10-21T01:17:05.085Z"
+    "id": 16,
+    "name": "Community Helpers",
+    "description": "People in the community that help others"
 }
 ```
 
     ...
-# Classes
+# Flashcards
 
-## Deletes Class based on provided Id
+## Deletes Flashcards based on provided Id
 
 
 
-	DELETE /api/classes/:id
+	DELETE /api/flashcards/:id
 
 
 ### Parameters
@@ -257,11 +255,11 @@ Success-Response:
 |---------|-----------|--------------------------------------|
 | id			| integer			|  <p>The ID is passed in the URL</p>							|
 
-## Returns all classes
+## Returns all flashcards
 
 
 
-	GET /api/classes
+	GET /api/flashcards
 
 
 ### Success Response
@@ -271,31 +269,12 @@ Success-Response:
 ```
 [
  {
-   "id": 1,
-   "title": "Yoga",
-   "instructorId": 1,
-   "categoryId": 1,
-   "scheduleTime": null,
-   "address": null,
-   "city": null,
-   "state": null,
-   "zipCode": null,
-   "created_at": "2019-10-21T12:51:44.173Z",
-   "updated_at": "2019-10-21T12:51:44.173Z"
- },
- {
-   "id": 2,
-   "title": "Water Aerobics",
-   "instructorId": 1,
-   "categoryId": 2,
-   "scheduleTime": null,
-   "address": null,
-   "city": null,
-   "state": null,
-   "zipCode": null,
-   "created_at": "2019-10-21T12:51:44.173Z",
-   "updated_at": "2019-10-21T12:51:44.173Z"
- }
+    "id": 1,
+    "frontCard": "A",
+    "backCard": "a",
+    "category_id": 1
+}
+...
 ]
 ```
 ### Error Response
@@ -304,28 +283,24 @@ Unauthorized-Response:
 
 ```
 {
-    "message": "Unauthroized"
+    "message": "No credentials provided"
 }
 ```
 ## Add New Class
 
 
 
-	POST /api/classes
+	POST /api/flashcards
 
 
 ### Parameters
 
 | Name    | Type      | Description                          |
 |---------|-----------|--------------------------------------|
-| title			| String			|  <p>Class Title *Required</p>							|
-| instructorId			| Integer			|  <p>The Id of the Instructor *Required</p>							|
-| categoryId			| Integer			|  <p>The Id of the Category *Required</p>							|
-| scheduleTime			| Date			|  <p>The Date and Time of the class</p>							|
-| address			| String			|  <p>The Street Address of the class</p>							|
-| city			| String			|  <p>The City of the class</p>							|
-| state			| String			|  <p>The State of the class</p>							|
-| zipCode			| String			|  <p>The ZipCode fo the class</p>							|
+| frontCard			| String			|  <p>Front of card information *Required</p>							|Back of card information
+| backCard			| String			|  <p>The Id of the Instructor</p>							|
+| category_id			| Integer			|  <p>The Id of the Category *Required</p>							|							|
+							|
 
 ### Success Response
 
@@ -333,17 +308,10 @@ Success-Response:
 
 ```
 {
- "id": 3,
- "title": "A New Class",
- "instructorId": 1,
- "categoryId": 1,
- "scheduleTime": null,
- "address": null,
- "city": null,
- "state": null,
- "zipCode": null,
- "created_at": "2019-10-21T13:23:39.281Z",
- "updated_at": "2019-10-21T13:23:39.281Z"
+    "id": 1,
+    "frontCard": "A",
+    "backCard": "a",
+    "category_id": 1
 }
 ```
 ### Error Response
@@ -352,28 +320,24 @@ Unauthorized-Response:
 
 ```
 {
-    "message": "Unauthroized"
+    "message": "No credentials provided"
 }
 ```
 ## Updated Class with provided Id
 
 
 
-	PUT /api/classes/:id
+	PUT /api/flashcards/:id
 
 
 ### Parameters
 
 | Name    | Type      | Description                          |
 |---------|-----------|--------------------------------------|
-| title			| String			|  <p>Class Title *Required</p>							|
-| instructorId			| Integer			|  <p>The Id of the Instructor *Required</p>							|
-| categoryId			| Integer			|  <p>The Id of the Category *Required</p>							|
-| scheduleTime			| Date			|  <p>The Date and Time of the class</p>							|
-| address			| String			|  <p>The Street Address of the class</p>							|
-| city			| String			|  <p>The City of the class</p>							|
-| state			| String			|  <p>The State of the class</p>							|
-| zipCode			| String			|  <p>The ZipCode fo the class</p>							|
+| frontCard			| String			|  <p>Front of card information *Required</p>							|Back of card information
+| backCard			| String			|  <p>The Id of the Instructor</p>							|
+| category_id			| Integer			|  <p>The Id of the Category *Required</p>							|							|
+							|					|
 
 ### Success Response
 
@@ -381,17 +345,10 @@ Success-Response:
 
 ```
 {
- "id": 3,
- "title": "An Updated Class",
- "instructorId": 1,
- "categoryId": 1,
- "scheduleTime": null,
- "address": null,
- "city": null,
- "state": null,
- "zipCode": null,
- "created_at": "2019-10-21T13:23:39.281Z",
- "updated_at": "2019-10-21T13:23:39.281Z"
+    "id": 1,
+    "frontCard": "A",
+    "backCard": "a",
+    "category_id": 1
 }
 ```
 ### Error Response
@@ -400,7 +357,7 @@ Unauthorized-Response:
 
 ```
 {
-    "message": "Unauthroized"
+    "message": "No credentials provided"
 }
 ```
 # User
@@ -445,7 +402,7 @@ Unauthorized-Response:
 
 ```
 {
-    "message": "Unauthroized"
+    "message": "No credentials provided"
 }
 ```
 ## Deletes the Current Logged In User
@@ -468,14 +425,14 @@ Unauthorized-Response:
 
 ```
 {
-    "message": "Unauthroized"
+    "message": "No credentials provided"
 }
 ```
 ## Retrieve all Classes that the Current User is signed up for
 
 <p>Retrieves the Current Users Signed up Classes</p>
 
-	GET /api/user/classes
+	GET /api/user/flashcards
 
 
 ### Success Response
@@ -498,57 +455,6 @@ Unauthorized-Response:
 
 ```
 {
-    "message": "Unauthroized"
-}
-```
-## Signs the User up for the Provided Class Id
-
-<p>Signs an user up for a class based on the provided class Id</p>
-
-	POST /api/user/classes/:id
-
-
-### Success Response
-
-Success-Response:
-
-```
-{
- "classId": 2,
- "clientId": 3,
- "created_at": "2019-10-21T19:00:55.322Z",
- "updated_at": "2019-10-21T19:00:55.322Z"
-}
-```
-### Error Response
-
-Unauthorized-Response:
-
-```
-{
-    "message": "Unauthroized"
-}
-```
-## Removes the User from the Provided Class Id
-
-<p>Removes the User from the provided Class Id</p>
-
-	DELETE /api/user/classes/:id
-
-
-### Success Response
-
-Success-Response:
-
-```
-1
-```
-### Error Response
-
-Unauthorized-Response:
-
-```
-{
-    "message": "Unauthroized"
+    "message": "No credentials provided"
 }
 ```

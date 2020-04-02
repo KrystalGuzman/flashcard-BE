@@ -16,8 +16,8 @@ server.use(cors());
 
 server.use("/api/auth", authRouter);
 server.use("/api/users", restricted, usersRouter);
-server.use("/api/categories", categoriesRouter);
-server.use("/api/flashcards", flashcardsRouter);
+server.use("/api/categories", restricted, categoriesRouter);
+server.use("/api/flashcards", restricted, flashcardsRouter);
 
 server.get("/", (req, res) => {
   res.status(200).json({ api: "up" });
