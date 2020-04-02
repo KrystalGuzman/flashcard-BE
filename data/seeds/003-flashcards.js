@@ -1,9 +1,9 @@
 exports.seed = function(knex, Promise) {
   // Deletes ALL existing entries
-  return knex("flashcards")
-    .truncate()
-    .then(function() {
-      // Inserts seed entries
+  // return knex("flashcards")
+  //   .truncate()
+  //   .then(function() {
+  //     // Inserts seed entries
       return knex("flashcards").insert([
         { frontCard: "A", backCard: "a", category_id: 1 },
         { frontCard: "B", backCard: "b", category_id: 1 },
@@ -51,5 +51,5 @@ exports.seed = function(knex, Promise) {
         
         
       ]);
-    });
+    // });
 };
