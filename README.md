@@ -375,10 +375,7 @@ Unauthorized-Response:
 |---------|-----------|--------------------------------------|
 | username			| String			|  <p>The Users username</p>							|
 | password			| String			|  <p>The Users password</p>							|
-| firstName			| String			|  <p>The Users first name</p>							|
-| lastName			| String			|  <p>The Users last name</p>							|
-| email			| String			|  <p>The Users email</p>							|
-| roleId			| Integer			|  <p>The Users Role, 1 for Instructor, 2 for Client</p>							|
+| role			| String			|  <p>The Users Role, admin, instructor, client</p>							|
 
 ### Success Response
 
@@ -387,13 +384,9 @@ Success-Response:
 ```
 {
  "id": 3,
- "firstName": "Donald",
- "lastName": null,
- "email": null,
  "username": "don",
- "created_at": "2019-10-20T22:59:45.794Z",
- "updated_at": "2019-10-20T22:59:45.794Z",
- "roleId": 1
+ "password": ,
+ "role": "client"
 }
 ```
 ### Error Response
@@ -441,12 +434,27 @@ Success-Response:
 
 ```
 [
- {
-   "classId": 1,
-   "clientId": 3,
-   "created_at": "2019-10-21T16:56:56.379Z",
-   "updated_at": "2019-10-21T16:56:56.379Z"
- }
+    {
+        "category_id": 1,
+        "user_id": 1,
+        "id": 1,
+        "username": "Krystal",
+        "name": "Alphabet"
+    },
+    {
+        "category_id": 2,
+        "user_id": 1,
+        "id": 2,
+        "username": "Krystal",
+        "name": "Numbers"
+    },
+    {
+        "category_id": 3,
+        "user_id": 1,
+        "id": 3,
+        "username": "Krystal",
+        "name": "Colors"
+    }
 ]
 ```
 ### Error Response
