@@ -13,16 +13,9 @@ exports.up = function(knex) {
     })
     .createTable('flashcards', (tbl) => {
         tbl.increments();
-        tbl.string('frontCard', 255).notNullable();
-        tbl.string('backCard', 255).notNullable();
-        tbl
-            .integer('category_id')
-            .unsigned()
-            .notNullable()
-            .references('id')
-            .inTable('categories')
-            .onDelete('RESTRICT')
-            .onUpdate('CASCADE');
+        tbl.string('frontCard').notNullable();
+        tbl.string('backCard').notNullable();
+        tbl.string('category').notNullable()
     })
     .createTable('user-categories', (tbl) => {
       tbl.increments();

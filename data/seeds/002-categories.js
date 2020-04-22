@@ -7,7 +7,7 @@ exports.seed = function(knex, Promise) {
       return knex("categories").insert([
         { name: "Alphabet", description: "The letters A-Z uppercase and lowercase" },
         { name: "Numbers", description: "Numbers 1-10 with pictures" },
-        { name: "Colors", description: "The colors of the rainbow" },
+        { name: "Community Helpers", description: "The people in the community that help us" },
       ]);
     // });
 };
